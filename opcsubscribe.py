@@ -11,10 +11,9 @@ message_counter = 0
 
 
 def browse_and_subscribe(client, node):
+    global handler, subscripiton
     if node.get_node_class() == ua.NodeClass.Variable:
         # Subscribe to the node
-        handler = SubHandler()
-        subscription = client.create_subscription(500, handler)
         handle = subscription.subscribe_data_change(node)
         #print(f"Subscribed to node: {node}")
 
@@ -40,7 +39,8 @@ if __name__ == "__main__":
     try:
         client.connect()
         print("Connected to OPC UA server")
-
+        handler = SubHandler()
+        subscription = client.create_subscription(500, handler)
         root_node = client.get_node(root_node_id)
         browse_and_subscribe(client, root_node)
 
