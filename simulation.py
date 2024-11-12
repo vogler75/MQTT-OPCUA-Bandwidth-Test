@@ -7,7 +7,7 @@ from paho.mqtt.properties import Properties
 from paho.mqtt.packettypes import PacketTypes
 
 # MQTT broker details
-broker = 'linux0'
+broker = 'localhost'
 port = 1883
 
 # Topics file

@@ -5,7 +5,7 @@ import time
 import os
 
 # Define the MQTT broker and topic
-broker = 'linux0'
+broker = 'localhost'
 port = 1883
 topic = "Enterprise/#"
 
