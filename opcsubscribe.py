@@ -3,8 +3,8 @@ import time
 import os
 
 # Define the OPC UA server URL and the root node to subscribe to
-server_url = "opc.tcp://192.168.1.4:4841/server"
-root_node_id = "ns=2;s=85/Mqtt/home/Enterprise"  # Replace with the actual node ID you want to subscribe to
+server_url = "opc.tcp://linux0:4840/server"
+root_node_id = "ns=2;s=85/Mqtt/test/Enterprise"  # Replace with the actual node ID you want to subscribe to
 
 # Global variable to keep track of the number of messages received
 message_counter = 0
