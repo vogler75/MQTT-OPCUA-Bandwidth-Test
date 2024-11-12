@@ -1,0 +1,24 @@
+Drivers:
+  Mqtt:
+    - Id: "test"
+      Enabled: true
+      LogLevel: INFO
+      Host: mqtt
+      Port: 1883
+      ClientId: frankenstein-driver
+      Format: Json
+      CustomJson: 
+          Value: "Value"
+          TimestampMs: "TimeMS"    
+          TimestampIso: "TimeISO"
+
+Servers:
+  OpcUa:
+    - Port: 4840
+      Enabled: true
+      LogLevel: INFO
+      EndpointAddresses:
+        - "linux0" # CHANGE THIS TO YOUR HOST IP
+      Topics:
+        - Topic: mqtt/test/path/Enterprise/#      
+
