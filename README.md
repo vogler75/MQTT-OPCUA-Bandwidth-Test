@@ -19,7 +19,7 @@ The data format used for MQTT is JSON, containing a timestamp and a value. This 
 
 ## Setup
 
-Note: Network traffic is easier to track if you run the servers and the clients (opcsubscriber/mqttsubscriber) on different machines! And run nethogs at the client machine.
+Note: Network traffic is easier to track if you run the servers (docker-compose plus simulation.py) and the clients (opcsubscriber/mqttsubscriber) on different machines! And run nethogs at the client machine.
 
 ### Prerequisites
 - Docker and Docker Compose installed.
