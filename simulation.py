@@ -7,15 +7,15 @@ from paho.mqtt.properties import Properties
 from paho.mqtt.packettypes import PacketTypes
 
 # MQTT broker details
-broker = 'localhost'
+broker = 'nuc1'
 port = 1883
 
 # Topics file
 topic_file = 'topics.csv'
 
 # Sleep times
-sleep_time = 0  # seconds to sleep between publishing to topics
-sleep_time_loop = 1  # seconds to sleep between a full loop of all topics
+sleep_time = 1  # seconds to sleep between publishing to topics
+sleep_time_loop = 0  # seconds to sleep between a full loop of all topics
 
 
 # Read topics from CSV file
@@ -29,12 +29,24 @@ def read_topics(file_path):
 
 
 # Publish to MQTT topics
-def publish_to_topics(client, topics):
-    for topic in topics:
+def publish_to_topics(client, topics, first=False):
+    # loop over topics with index
+    for index, topic in enumerate(topics):
+
         value = random.randint(1, 1000)
         payload = {"TimeMS": int(time.time() * 1000), "Value": value}
-        client.publish(topic, json.dumps(payload), retain=False, qos=0)
-        client.publish("Binary/"+topic, value.to_bytes(4, byteorder='big'), retain=False)
+
+        if first:
+            properties = Properties(PacketTypes.PUBLISH)
+            properties.TopicAlias = index + 1  # Set the alias property
+            client.publish(topic, json.dumps(payload), qos=0, properties=properties)
+        else:
+            properties = Properties(PacketTypes.PUBLISH)
+            properties.TopicAlias = index + 1  # Set the alias property
+            client.publish("", json.dumps(payload), qos=0, properties=properties)
+
+        #client.publish(topic, json.dumps(payload), retain=False, qos=0)
+        #client.publish("Binary/"+topic, value.to_bytes(4, byteorder='big'), retain=False)
         #print(f'Published to {topic}: {payload}')
         time.sleep(sleep_time)
 
@@ -75,6 +87,7 @@ def main():
     while not client.is_connected():
         time.sleep(1)
 
+    publish_to_topics(client, topics, True)
     while True:
         publish_to_topics(client, topics)
         time.sleep(sleep_time_loop)
